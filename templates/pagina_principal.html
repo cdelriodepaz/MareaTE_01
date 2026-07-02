@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MareaTE — Comunidad Parroquial Digital</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --mar: #0077B6;
+            --espuma: #90E0EF;
+            --arena: #F5F0E8;
+            --roca: #1A1A2E;
+            --texto: #2C2C3E;
+            --gris: #6B7280;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--arena);
+            color: var(--texto);
+            min-height: 100vh;
+        }
+
+        /* NAV */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.2rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(245, 240, 232, 0.85);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid rgba(0, 119, 182, 0.15);
+            z-index: 100;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--roca);
+            letter-spacing: -0.02em;
+        }
+
+        .logo .azul {
+            color: var(--mar);
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--gris);
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            transition: color 0.2s;
+        }
+
+        nav a:hover {
+            color: var(--mar);
+        }
+
+        /* HERO */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 8rem 2rem 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 180px;
+            background: var(--mar);
+            clip-path: ellipse(60% 100% at 50% 100%);
+            opacity: 0.08;
+        }
+
+        .hero-eyebrow {
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--mar);
+            margin-bottom: 1.5rem;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.8rem, 7vw, 5.5rem);
+            font-weight: 700;
+            line-height: 1.05;
+            color: var(--roca);
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.03em;
+            max-width: 800px;
+        }
+
+        .hero h1 em {
+            font-style: italic;
+        }
+
+        .rojo {
+            color: red !important;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--gris);
+            max-width: 520px;
+            line-height: 1.7;
+            margin-bottom: 2.5rem;
+            font-weight: 300;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background: var(--mar);
+            color: white;
+            padding: 0.9rem 2rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 0.03em;
+            transition: background 0.2s, transform 0.15s;
+        }
+
+        .btn-primary:hover {
+            background: #005f92;
+            transform: translateY(-1px);
+        }
+
+        .wave-divider {
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+            margin-top: -2px;
+        }
+
+        .wave-divider svg {
+            display: block;
+            width: 100%;
+        }
+
+        /* SECCIÓN PARROQUIAS */
+        .parroquias {
+            background: var(--mar);
+            padding: 5rem 2rem;
+            text-align: center;
+        }
+
+        .parroquias h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        .parroquias p {
+            color: var(--espuma);
+            margin-bottom: 3rem;
+            font-size: 0.95rem;
+        }
+
+        .parroquias-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .parroquia-card {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-decoration: none;
+            color: white;
+            transition: background 0.2s, transform 0.15s;
+            text-align: left;
+        }
+
+        .parroquia-card:hover {
+            background: rgba(255,255,255,0.18);
+            transform: translateY(-2px);
+        }
+
+        .parroquia-card .nombre {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .parroquia-card .lugar {
+            font-size: 0.8rem;
+            color: var(--espuma);
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .parroquia-card .camino {
+            display: inline-block;
+            margin-top: 0.8rem;
+            font-size: 0.75rem;
+            background: rgba(255,255,255,0.15);
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            color: var(--espuma);
+        }
+
+        /* SECCIÓN QUÉ ES */
+        .que-es {
+            padding: 5rem 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .que-es h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--roca);
+            margin-bottom: 1rem;
+        }
+
+        .que-es p {
+            color: var(--gris);
+            line-height: 1.8;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .pilares {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+            text-align: left;
+        }
+
+        .pilar {
+            padding: 1.5rem;
+            border-left: 3px solid var(--mar);
+            background: white;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .pilar h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            color: var(--roca);
+            margin-bottom: 0.5rem;
+        }
+
+        .pilar p {
+            font-size: 0.85rem;
+            color: var(--gris);
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* FOOTER */
+        footer {
+            background: var(--roca);
+            color: rgba(255,255,255,0.4);
+            text-align: center;
+            padding: 2rem;
+            font-size: 0.8rem;
+        }
+
+        footer a {
+            color: var(--espuma);
+            text-decoration: none;
+        }
+
+        @media (max-width: 600px) {
+            nav a { display: none; }
+            .hero h1 { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">Marea<span class="rojo">TE</span></div>
+        <a href="#parroquias">Parroquias</a>
+    </nav>
+
+    <section class="hero">
+        <p class="hero-eyebrow">Comunidad parroquial digital · Asturias</p>
+        <h1>Alza la mirada.<br><em><span class="rojo">Tu parroquia</span></em><br>te espera.</h1>
+        <p>Una plataforma abierta para coros, comunidades y peregrinos. Ensaya en casa, vive la fe en comunidad.</p>
+        <a href="#parroquias" class="btn-primary">Ver parroquias</a>
+    </section>
+
+    <div class="wave-divider">
+        <svg viewBox="0 0 1440 80" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+            <path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="#0077B6"/>
+        </svg>
+    </div>
+
+    <section class="parroquias" id="parroquias">
+        <h2>Parroquias</h2>
+        <p>Encuentra tu comunidad y accede a sus recursos</p>
+        <div class="parroquias-grid">
+            {% for parroquia in parroquias %}
+                <a href="/{{parroquia.slug}}/" class="parroquia-card">
+                    <div class="nombre">{{parroquia.nombre}}</div>
+                    <div class="lugar">{{parroquia.direccion_iglesia}}</div>
+                </a>
+            {% endfor %}
+            <a href="#" class="parroquia-card">
+                <div class="nombre"><span class="rojo">Tu parroquia</span></div>
+                <div class="lugar">Aquí podría estar</div>
+            </a>
+        </div>
+    </section>
+
+    <div class="wave-divider" style="background: var(--mar);">
+        <svg viewBox="0 0 1440 80" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+            <path d="M0,40 C360,0 1080,80 1440,40 L1440,0 L0,0 Z" fill="#F5F0E8"/>
+        </svg>
+    </div>
+
+    <section class="que-es">
+        <h2>¿Qué es MareaTE?</h2>
+        <p>Una plataforma de código abierto diseñada para comunidades parroquiales. Combina el ensayo coral asíncrono con un espacio de encuentro digital para vecinos, feligreses y peregrinos.</p>
+        <div class="pilares">
+            <div class="pilar">
+                <h3>🎵 Coro Invertido</h3>
+                <p>Ensaya tu voz en casa con maquetas de audio. El tiempo presencial es para la comunión, no para el solfeo.</p>
+            </div>
+            <div class="pilar">
+                <h3>🐚 Peregrinos</h3>
+                <p>Información práctica para quienes pasan por el Camino. Sello de credencial, horarios y bienvenida.</p>
+            </div>
+            <div class="pilar">
+                <h3>📖 Formación</h3>
+                <p>Catequesis, guías de oración y materiales litúrgicos al alcance de toda la comunidad.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        MareaTE · Código abierto · <a href="#">MIT License</a> · Salinas, Asturias
+    </footer>
+
+</body>
+</html>
