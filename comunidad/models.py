@@ -2,20 +2,22 @@ from django.db import models
 
 
 # Create your models here.
-class Parroquia(models.Model):
-    nombre = models.CharField(max_length=60)
-    descripcion = models.TextField(max_length=400)
-    direccion_iglesia = models.CharField(max_length=80)
-    direccion_oficina = models.CharField(max_length=80, blank=True)
-    telefono = models.CharField(max_length=12)
+class Parish(models.Model):
+    name = models.CharField(max_length=60, verbose_name="nombre")
+    description = models.TextField(max_length=400, verbose_name="descripción")
+    church_dir = models.CharField(max_length=80, verbose_name="dirección iglesia")
+    office_dir = models.CharField(
+        max_length=80, blank=True, verbose_name="dirección oficina"
+    )
+    phone = models.CharField(max_length=12, verbose_name="teléfono")
     email = models.EmailField(blank=True)
-    horario_misas = models.TextField()
-    sello_credencial = models.BooleanField(default=False)
-    info_peregrinos = models.TextField(blank=True)
+    mass_schedule = models.TextField(verbose_name="horario misas")
+    pilgrim_stamp = models.BooleanField(default=False, verbose_name="sello peregrinos")
+    pilgrim_info = models.TextField(blank=True, verbose_name="información peregrinos")
     slug = models.SlugField()
-    logotipo = models.ImageField(blank=True)
-    activa = models.BooleanField(default=True)
-    color_primario = models.CharField(max_length=7)
+    logo = models.ImageField(blank=True)
+    active = models.BooleanField(default=True, verbose_name="activa")
+    color = models.CharField(max_length=7)
 
     def __str__(self):
-        return self.nombre
+        return self.name

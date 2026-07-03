@@ -323,10 +323,10 @@
         <h2>Parroquias</h2>
         <p>Encuentra tu comunidad y accede a sus recursos</p>
         <div class="parroquias-grid">
-            {% for parroquia in parroquias %}
-                <a href="/{{parroquia.slug}}/" class="parroquia-card">
-                    <div class="nombre">{{parroquia.nombre}}</div>
-                    <div class="lugar">{{parroquia.direccion_iglesia}}</div>
+            {% for parish in parishes %}
+                <a href="/{{parish.slug}}/" class="parroquia-card">
+                    <div class="nombre">{{parish.name}}</div>
+                    <div class="lugar">{{parish.church_dir}}</div>
                 </a>
             {% endfor %}
             <a href="#" class="parroquia-card">
