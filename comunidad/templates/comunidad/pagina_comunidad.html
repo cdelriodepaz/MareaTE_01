@@ -1,13 +1,272 @@
-<!DOCTYPE html>
+{% extends 'layout.html' %}
 
-<html>
-    <head>
-        <title>{{parish.name}}</title>
-    </head>
+{% block title %}{{ parish.name }} — MareaTE{% endblock %}
 
-    <body>
-        <p>{{parish.description}}</p>
-        <p>{{parish.office_dir}}</p>
-    </body>
+{% block extra_css %}
+<style>
+    :root {
+        --color-parroquia: {{ parish.color }};
+    }
 
-</html>
+    /* CABECERA */
+    .parish-header {
+        background: white;
+        padding: 5rem 2rem 2rem;
+        text-align: center;
+        border-bottom: 4px solid var(--color-parroquia);
+        padding-top: 5rem;
+    }
+
+    .parish-logo {
+        width: 120px;
+        height: 120px;
+        object-fit: contain;
+        margin-bottom: 1rem;
+    }
+
+    .parish-logo-placeholder {
+        width: 120px;
+        height: 120px;
+        background: var(--color-parroquia);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1rem;
+        font-size: 2.5rem;
+        color: white;
+    }
+
+    .parish-name {
+        font-family: 'Playfair Display', serif;
+        font-size: 2.2rem;
+        color: var(--roca);
+        margin-bottom: 0.5rem;
+    }
+
+    .parish-description {
+        color: var(--gris);
+        max-width: 600px;
+        margin: 0 auto;
+        line-height: 1.7;
+        font-size: 1rem;
+    }
+
+    /* SECCIÓN INFO */
+    .parish-info {
+        padding: 3rem 0;
+    }
+
+    .info-card {
+        border: none;
+        border-radius: 10px;
+        border-left: 4px solid var(--color-parroquia);
+        box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        height: 100%;
+    }
+
+    .info-card .card-title {
+        font-family: 'Playfair Display', serif;
+        color: var(--roca);
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+    }
+
+    .info-item {
+        display: flex;
+        gap: 0.7rem;
+        margin-bottom: 0.7rem;
+        font-size: 0.9rem;
+        color: var(--gris);
+        align-items: flex-start;
+    }
+
+    .info-item .bi {
+        flex-shrink: 0;
+        width: 20px;
+        text-align: center;
+        color: var(--color-parroquia);
+        font-size: 1rem;
+        margin-top: 2px;
+    }
+
+    .pilgrim-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        background: var(--color-parroquia);
+        color: white;
+        font-size: 0.75rem;
+        padding: 0.2rem 0.7rem;
+        border-radius: 20px;
+        margin-bottom: 0.8rem;
+    }
+
+    /* MENÚ DE SECCIONES */
+    .parish-sections {
+        background: var(--arena);
+        padding: 3rem 0;
+        border-top: 1px solid rgba(0,0,0,0.06);
+    }
+
+    .section-btn {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem 1rem;
+        border-radius: 12px;
+        text-decoration: none;
+        background: white;
+        border: 2px solid transparent;
+        transition: all 0.2s;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        color: var(--roca);
+        height: 100%;
+    }
+
+    .section-btn:hover {
+        border-color: var(--color-parroquia);
+        color: var(--color-parroquia);
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    }
+
+    .section-btn .bi {
+        font-size: 2rem;
+        margin-bottom: 0.7rem;
+        color: var(--color-parroquia);
+    }
+
+    .section-btn .section-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.1rem;
+        margin-bottom: 0.3rem;
+    }
+
+    .section-btn .section-desc {
+        font-size: 0.78rem;
+        color: var(--gris);
+        text-align: center;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+    <!-- CABECERA -->
+    <div class="parish-header">
+        {% if parish.logo %}
+            <img src="{{ parish.logo.url }}" alt="Logo {{ parish.name }}" class="parish-logo">
+        {% else %}
+            <div class="parish-logo-placeholder">
+                <i class="bi bi-bank"></i>
+            </div>
+        {% endif %}
+        <h1 class="parish-name">{{ parish.name }}</h1>
+        <p class="parish-description">{{ parish.description }}</p>
+    </div>
+
+    <!-- INFORMACIÓN -->
+    <section class="parish-info">
+        <div class="container">
+            <div class="row g-4">
+
+                <!-- TARJETA CONTACTO E INFORMACIÓN -->
+                <div class="col-md-6 {% if parish.pilgrim_info %}col-lg-6{% else %}col-lg-8 offset-lg-2{% endif %}">
+                    <div class="card info-card p-4">
+                        <h5 class="card-title">Información</h5>
+
+                        {% if parish.mass_schedule %}
+                        <div class="info-item">
+                            <i class="bi bi-clock"></i>
+                            <span>{{ parish.mass_schedule }}</span>
+                        </div>
+                        {% endif %}
+
+                        {% if parish.church_dir %}
+                        <div class="info-item">
+                            <i class="bi bi-geo-alt"></i>
+                            <span>{{ parish.church_dir }}</span>
+                        </div>
+                        {% endif %}
+
+                        {% if parish.office_dir %}
+                        <div class="info-item">
+                            <i class="bi bi-building"></i>
+                            <span>{{ parish.office_dir }}</span>
+                        </div>
+                        {% endif %}
+
+                        {% if parish.phone %}
+                        <div class="info-item">
+                            <i class="bi bi-telephone"></i>
+                            <span>{{ parish.phone }}</span>
+                        </div>
+                        {% endif %}
+
+                        {% if parish.email %}
+                        <div class="info-item">
+                            <i class="bi bi-envelope"></i>
+                            <a href="mailto:{{ parish.email }}">{{ parish.email }}</a>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- TARJETA PEREGRINOS (solo si hay info) -->
+                {% if parish.pilgrim_info %}
+                <div class="col-md-6">
+                    <div class="card info-card p-4">
+                        <h5 class="card-title">Peregrinos</h5>
+                        {% if parish.pilgrim_stamp %}
+                            <span class="pilgrim-badge">
+                                <i class="bi bi-patch-check"></i>
+                                Sellamos la credencial
+                            </span>
+                        {% endif %}
+                        <p style="font-size: 0.9rem; color: var(--gris); line-height: 1.7;">
+                            {{ parish.pilgrim_info }}
+                        </p>
+                    </div>
+                </div>
+                {% endif %}
+
+            </div>
+        </div>
+    </section>
+
+    <!-- MENÚ DE SECCIONES -->
+    <section class="parish-sections">
+        <div class="container">
+            <div class="row g-3 justify-content-center">
+
+                <div class="col-6 col-md-4">
+                    <a href="/{{ parish.slug }}/comunidad/" class="section-btn">
+                        <i class="bi bi-people"></i>
+                        <span class="section-title">Comunidad</span>
+                        <span class="section-desc">Avisos, noticias y vida parroquial</span>
+                    </a>
+                </div>
+
+                <div class="col-6 col-md-4">
+                    <a href="/{{ parish.slug }}/formacion/" class="section-btn">
+                        <i class="bi bi-book"></i>
+                        <span class="section-title">Formación</span>
+                        <span class="section-desc">Catequesis y materiales de fe</span>
+                    </a>
+                </div>
+
+                <div class="col-6 col-md-4">
+                    <a href="/{{ parish.slug }}/coro/" class="section-btn">
+                        <i class="bi bi-music-note-beamed"></i>
+                        <span class="section-title">Coro</span>
+                        <span class="section-desc">Maquetas de ensayo y proyectos</span>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
