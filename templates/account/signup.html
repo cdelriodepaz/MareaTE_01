@@ -1,0 +1,129 @@
+{% extends 'layout.html' %}
+
+{% block title %}Crear cuenta — MareaTE{% endblock %}
+
+{% block extra_css %}
+<style>
+    .auth-container {
+        min-height: 80vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 6rem 1rem 2rem;
+    }
+
+    .auth-card {
+        background: white;
+        border-radius: 12px;
+        padding: 2.5rem;
+        width: 100%;
+        max-width: 420px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        border-top: 4px solid var(--mar);
+    }
+
+    .auth-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.8rem;
+        color: var(--roca);
+        margin-bottom: 0.5rem;
+    }
+
+    .auth-subtitle {
+        color: var(--gris);
+        font-size: 0.9rem;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+    }
+
+    .auth-steps {
+        background: #f9f9f7;
+        border-radius: 8px;
+        padding: 1rem 1.2rem;
+        margin-bottom: 1.5rem;
+        font-size: 0.85rem;
+        color: var(--gris);
+    }
+
+    .auth-steps ol {
+        margin: 0;
+        padding-left: 1.2rem;
+        line-height: 2;
+    }
+
+    .auth-input {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border: 1.5px solid #e5e7eb;
+        border-radius: 6px;
+        font-size: 0.95rem;
+        outline: none;
+        transition: border-color 0.2s;
+        margin-bottom: 1rem;
+    }
+
+    .auth-input:focus {
+        border-color: var(--mar);
+    }
+
+    .auth-btn {
+        width: 100%;
+        padding: 0.8rem;
+        background: var(--mar);
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 0.95rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+
+    .auth-btn:hover {
+        background: #005f92;
+    }
+
+    .auth-link {
+        text-align: center;
+        margin-top: 1.2rem;
+        font-size: 0.85rem;
+        color: var(--gris);
+    }
+
+    .auth-link a {
+        color: var(--mar);
+        text-decoration: none;
+        font-weight: 500;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-card">
+        <h1 class="auth-title">Crear cuenta</h1>
+        <p class="auth-subtitle">Regístrate con tu correo electrónico para acceder al área del coro de tu parroquia. No necesitas contraseña.</p>
+
+        <div class="auth-steps">
+            <strong>¿Cómo funciona?</strong>
+            <ol>
+                <li>Introduce tu correo electrónico.</li>
+                <li>Te enviaremos un código de verificación.</li>
+                <li>Introduces el código y ya tienes tu cuenta.</li>
+            </ol>
+        </div>
+
+        <form method="post">
+            {% csrf_token %}
+            <input type="email" name="email" placeholder="Tu correo electrónico" class="auth-input" required>
+            <button type="submit" class="auth-btn">
+                <i class="bi bi-envelope me-2"></i>Enviarme el código
+            </button>
+        </form>
+
+        <div class="auth-link">
+            ¿Ya tienes cuenta? <a href="/accounts/login/">Inicia sesión aquí</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

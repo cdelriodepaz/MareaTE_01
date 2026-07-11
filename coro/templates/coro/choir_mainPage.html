@@ -1,0 +1,13 @@
+{% extends 'layout.html' %}
+
+{% block title %}Coro — {{ parish.name }}{% endblock %}
+
+{% block content %}
+<div style="padding: 8rem 2rem 4rem; text-align: center;">
+    <h1 style="font-family: 'Playfair Display', serif; font-size: 2rem; margin-bottom: 1rem;">
+        Coro — {{ parish.name }}
+    </h1>
+    <p style="color: var(--gris);">Sección en construcción. Aquí aparecerán los proyectos y maquetas de ensayo.</p>
+    <a href="/{{ parish.slug }}/" style="color: var(--mar);">← Volver a la parroquia</a>
+</div>
+{% endblock %}

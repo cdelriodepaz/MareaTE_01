@@ -1,0 +1,120 @@
+{% extends 'layout.html' %}
+
+{% block title %}Iniciar sesión — MareaTE{% endblock %}
+
+{% block extra_css %}
+<style>
+    .auth-container {
+        min-height: 80vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 6rem 1rem 2rem;
+    }
+
+    .auth-card {
+        background: white;
+        border-radius: 12px;
+        padding: 2.5rem;
+        width: 100%;
+        max-width: 420px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        border-top: 4px solid var(--mar);
+    }
+
+    .auth-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.8rem;
+        color: var(--roca);
+        margin-bottom: 0.5rem;
+    }
+
+    .auth-subtitle {
+        color: var(--gris);
+        font-size: 0.9rem;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+    }
+
+    .auth-notice {
+        background: #f0f7ff;
+        border-left: 3px solid var(--mar);
+        border-radius: 0 6px 6px 0;
+        padding: 0.8rem 1rem;
+        font-size: 0.85rem;
+        color: var(--gris);
+        margin-bottom: 1.5rem;
+    }
+
+    .auth-input {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border: 1.5px solid #e5e7eb;
+        border-radius: 6px;
+        font-size: 0.95rem;
+        outline: none;
+        transition: border-color 0.2s;
+        margin-bottom: 1rem;
+    }
+
+    .auth-input:focus {
+        border-color: var(--mar);
+    }
+
+    .auth-btn {
+        width: 100%;
+        padding: 0.8rem;
+        background: var(--mar);
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 0.95rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+
+    .auth-btn:hover {
+        background: #005f92;
+    }
+
+    .auth-link {
+        text-align: center;
+        margin-top: 1.2rem;
+        font-size: 0.85rem;
+        color: var(--gris);
+    }
+
+    .auth-link a {
+        color: var(--mar);
+        text-decoration: none;
+        font-weight: 500;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-card">
+        <h1 class="auth-title">Iniciar sesión</h1>
+        <p class="auth-subtitle">Accede a tu cuenta para ensayar con las maquetas de voz de tu parroquia.</p>
+
+        <div class="auth-notice">
+            <i class="bi bi-info-circle me-1"></i>
+            <strong>¿Primera vez?</strong> Si aún no tienes cuenta, no podrás iniciar sesión. Primero <a href="/accounts/signup/" style="color: var(--mar);">crea tu cuenta aquí</a>.
+        </div>
+
+        <form method="post">
+            {% csrf_token %}
+            <input type="email" name="login" placeholder="Tu correo electrónico" class="auth-input" required>
+            <button type="submit" class="auth-btn">
+                <i class="bi bi-envelope me-2"></i>Enviarme el código
+            </button>
+        </form>
+
+        <div class="auth-link">
+            ¿No tienes cuenta? <a href="/accounts/signup/">Regístrate aquí</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
