@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "allauth",
     "allauth.account",
     "allauth.headless",
+    "tinymce",
 ]
 
 SITE_ID = 1
@@ -147,3 +148,10 @@ LOGOUT_REDIRECT_URL = "/"
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+TINYMCE_DEFAULT_CONFIG = {
+    "height": 360,
+    "menubar": True,
+    "plugins": "lists link image",
+    "toolbar": "undo redo | bold italic | bullist numlist | link image",
+}
