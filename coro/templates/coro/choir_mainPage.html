@@ -2,12 +2,227 @@
 
 {% block title %}Coro — {{ parish.name }}{% endblock %}
 
+{% block extra_css %}
+<style>
+    :root {
+        --color-parroquia: {{ parish.color }};
+    }
+
+    .coro-header {
+        background: white;
+        padding: 5rem 2rem 2rem;
+        border-bottom: 4px solid var(--color-parroquia);
+        text-align: center;
+    }
+
+    .coro-header-inner {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1.2rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .parish-logo-small {
+        width: 52px;
+        height: 52px;
+        object-fit: contain;
+        border-radius: 50%;
+    }
+
+    .parish-logo-placeholder-small {
+        width: 52px;
+        height: 52px;
+        background: var(--color-parroquia);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.3rem;
+        flex-shrink: 0;
+    }
+
+    .coro-header h1 {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.8rem;
+        color: var(--roca);
+        margin: 0;
+    }
+
+    .coro-header .subtitle {
+        color: var(--gris);
+        font-size: 0.9rem;
+        margin-top: 0.3rem;
+    }
+
+    .coro-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        background: var(--color-parroquia);
+        color: white;
+        font-size: 0.75rem;
+        padding: 0.25rem 0.8rem;
+        border-radius: 20px;
+        margin-top: 0.7rem;
+    }
+
+    /* PROYECTOS */
+    .projects-section {
+        padding: 3rem 0;
+    }
+
+    .section-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.4rem;
+        color: var(--roca);
+        margin-bottom: 1.5rem;
+    }
+
+    .project-card {
+        background: white;
+        border-radius: 10px;
+        border-left: 4px solid var(--color-parroquia);
+        box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+        padding: 1.5rem;
+        text-decoration: none;
+        color: var(--roca);
+        display: block;
+        transition: all 0.2s;
+        height: 100%;
+    }
+
+    .project-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+        color: var(--color-parroquia);
+    }
+
+    .project-card .project-name {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.1rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .project-card .project-desc {
+        font-size: 0.85rem;
+        color: var(--gris);
+        line-height: 1.5;
+        margin-bottom: 0.8rem;
+    }
+
+    .project-card .project-date {
+        font-size: 0.78rem;
+        color: var(--gris);
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+    }
+
+    .project-card .project-songs {
+        font-size: 0.78rem;
+        color: var(--color-parroquia);
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        margin-top: 0.4rem;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 3rem;
+        color: var(--gris);
+    }
+
+    .empty-state .bi {
+        font-size: 3rem;
+        color: var(--color-parroquia);
+        opacity: 0.4;
+        display: block;
+        margin-bottom: 1rem;
+    }
+
+    .back-link {
+        color: var(--gris);
+        text-decoration: none;
+        font-size: 0.85rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        margin-bottom: 1.5rem;
+        transition: color 0.2s;
+    }
+
+    .back-link:hover {
+        color: var(--color-parroquia);
+    }
+</style>
+{% endblock %}
+
 {% block content %}
-<div style="padding: 8rem 2rem 4rem; text-align: center;">
-    <h1 style="font-family: 'Playfair Display', serif; font-size: 2rem; margin-bottom: 1rem;">
-        Coro — {{ parish.name }}
-    </h1>
-    <p style="color: var(--gris);">Sección en construcción. Aquí aparecerán los proyectos y maquetas de ensayo.</p>
-    <a href="/{{ parish.slug }}/" style="color: var(--mar);">← Volver a la parroquia</a>
-</div>
+
+    <!-- CABECERA -->
+    <div class="coro-header">
+        <div class="coro-header-inner">
+            {% if parish.logo %}
+                <img src="{{ parish.logo.url }}" alt="Logo {{ parish.name }}" class="parish-logo-small">
+            {% else %}
+                <div class="parish-logo-placeholder-small">
+                    <i class="bi bi-bank"></i>
+                </div>
+            {% endif %}
+            <h1>{{ parish.name }}</h1>
+        </div>
+        <p class="subtitle">Área del coro — proyectos y maquetas de ensayo</p>
+        <span class="coro-badge">
+            <i class="bi bi-music-note-beamed"></i>
+            Coro
+        </span>
+    </div>
+
+    <!-- PROYECTOS -->
+    <section class="projects-section">
+        <div class="container">
+
+            <a href="/{{ parish.slug }}/" class="back-link">
+                <i class="bi bi-arrow-left"></i> Volver a la parroquia
+            </a>
+
+            <h2 class="section-title">Proyectos</h2>
+
+            {% if projects %}
+                <div class="row g-3">
+                    {% for project in projects %}
+                        <div class="col-md-6 col-lg-4">
+                            <a href="/{{ parish.slug }}/coro/{{ project.id }}/" class="project-card">
+                                <div class="project-name">{{ project.name }}</div>
+                                {% if project.description %}
+                                    <div class="project-desc">{{ project.description }}</div>
+                                {% endif %}
+                                {% if project.date %}
+                                    <div class="project-date">
+                                        <i class="bi bi-calendar3"></i>
+                                        {{ project.date }}
+                                    </div>
+                                {% endif %}
+                                <div class="project-songs">
+                                    <i class="bi bi-music-note-list"></i>
+                                    Ver canciones
+                                </div>
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="empty-state">
+                    <i class="bi bi-music-note-beamed"></i>
+                    <p>Aún no hay proyectos creados para esta parroquia.</p>
+                    <p style="font-size: 0.85rem;">El coordinador puede añadirlos desde el panel de administración.</p>
+                </div>
+            {% endif %}
+
+        </div>
+    </section>
+
 {% endblock %}
