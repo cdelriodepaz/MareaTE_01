@@ -151,6 +151,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 TINYMCE_DEFAULT_CONFIG = {
     "height": 360,
+    "width": "100%",
     "menubar": True,
     "plugins": "lists link image",
     "toolbar": "undo redo | bold italic | bullist numlist | link image",

@@ -1,0 +1,142 @@
+{% extends 'layout.html' %}
+
+{% block title %}{{ publication.title }} — MareaTE{% endblock %}
+
+{% block extra_css %}
+<style>
+    :root {
+        --color-parroquia: {{ parish.color }};
+    }
+
+    .publication-header {
+        background: white;
+        padding: 5rem 2rem 2rem;
+        border-bottom: 4px solid var(--color-parroquia);
+        text-align: center;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .publication-header h1 {
+        font-family: 'Playfair Display', serif;
+        font-size: 2rem;
+        color: var(--roca);
+        margin-bottom: 0.8rem;
+        line-height: 1.2;
+    }
+
+    .publication-meta {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1.2rem;
+        font-size: 0.85rem;
+        color: var(--gris);
+    }
+
+    .publication-meta .bi {
+        color: var(--color-parroquia);
+    }
+
+    .publication-section {
+        padding: 3rem 0;
+    }
+
+    .back-link {
+        color: var(--gris);
+        text-decoration: none;
+        font-size: 0.85rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        margin-bottom: 2rem;
+        transition: color 0.2s;
+    }
+
+    .back-link:hover {
+        color: var(--color-parroquia);
+    }
+
+    .publication-image {
+        width: 100%;
+        max-height: 400px;
+        object-fit: cover;
+        border-radius: 10px;
+        margin-bottom: 2rem;
+    }
+
+    .publication-body {
+        font-size: 1rem;
+        line-height: 1.8;
+        color: var(--texto);
+        max-width: 720px;
+        margin: 0 auto;
+    }
+
+    .publication-body h1,
+    .publication-body h2,
+    .publication-body h3 {
+        font-family: 'Playfair Display', serif;
+        color: var(--roca);
+        margin-top: 1.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .publication-body p {
+        margin-bottom: 1rem;
+    }
+
+    .publication-body ul,
+    .publication-body ol {
+        padding-left: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .publication-body a {
+        color: var(--color-parroquia);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+    <div style="background: white; padding-top: 5rem; padding-bottom: 2rem; border-bottom: 4px solid var(--color-parroquia);">
+        <div class="container">
+            <div style="max-width: 720px; margin: 0 auto; text-align: center;">
+                <p style="color: var(--gris); font-size: 0.85rem; margin-bottom: 0.5rem;">
+                    <i class="bi bi-bank me-1"></i>{{ parish.name }}
+                </p>
+                <h1 style="font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--roca); line-height: 1.2; margin-bottom: 1rem;">
+                    {{ publication.title }}
+                </h1>
+                <div class="publication-meta">
+                    <span><i class="bi bi-calendar3"></i> {{ publication.date }}</span>
+                    {% if publication.author %}
+                        <span><i class="bi bi-person"></i> {{ publication.author }}</span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="publication-section">
+        <div class="container">
+            <div style="max-width: 720px; margin: 0 auto;">
+
+                <a href="/{{ parish.slug }}/avisos/" class="back-link">
+                    <i class="bi bi-arrow-left"></i> Volver a avisos
+                </a>
+
+                {% if publication.image %}
+                    <img src="{{ publication.image.url }}" alt="{{ publication.title }}" class="publication-image">
+                {% endif %}
+
+                <div class="publication-body">
+                    {{ publication.body|safe }}
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

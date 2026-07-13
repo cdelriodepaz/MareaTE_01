@@ -10,17 +10,22 @@ def pagina_comunidad(request, slug):
 
 def community_publications(request, slug):
     parish = get_object_or_404(Parish, slug=slug)
-    publications = Publication.objects.filter(parish=parish, published=True)
+    publications = Publication.objects.filter(parish=parish, published=True).order_by(
+        "-date"
+    )
     return render(
-        request, "comunidad/community_publications.html", {"publications": publications}
+        request,
+        "comunidad/community_publications.html",
+        {"publications": publications, "parish": parish},
     )
 
 
-def community_publication_closeup(request, slug, id):
+def community_publication_closeup(request, slug, publication_id):
+
     parish = get_object_or_404(Parish, slug=slug)
-    publication = get_object_or_404(Publication, id=id)
+    publication = get_object_or_404(Publication, id=publication_id)
     return render(
         request,
         "comunidad/community_publications_closeup.html",
-        {"publication": publication},
+        {"publication": publication, "parish": parish},
     )

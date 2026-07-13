@@ -1,0 +1,161 @@
+{% extends 'layout.html' %}
+
+{% block title %}Avisos — {{ parish.name }}{% endblock %}
+
+{% block extra_css %}
+<style>
+    :root {
+        --color-parroquia: {{ parish.color }};
+    }
+
+    .publications-header {
+        background: white;
+        padding: 5rem 2rem 2rem;
+        border-bottom: 4px solid var(--color-parroquia);
+        text-align: center;
+    }
+
+    .publications-header h1 {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.8rem;
+        color: var(--roca);
+        margin-bottom: 0.3rem;
+    }
+
+    .publications-header .parish-name {
+        color: var(--gris);
+        font-size: 0.9rem;
+    }
+
+    .publications-section {
+        padding: 3rem 0;
+    }
+
+    .back-link {
+        color: var(--gris);
+        text-decoration: none;
+        font-size: 0.85rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        margin-bottom: 1.5rem;
+        transition: color 0.2s;
+    }
+
+    .back-link:hover {
+        color: var(--color-parroquia);
+    }
+
+    .publication-card {
+        background: white;
+        border-radius: 10px;
+        border-left: 4px solid var(--color-parroquia);
+        box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+        padding: 1.5rem;
+        text-decoration: none;
+        color: var(--roca);
+        display: block;
+        transition: all 0.2s;
+        margin-bottom: 1rem;
+    }
+
+    .publication-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+        color: var(--roca);
+    }
+
+    .publication-meta {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 0.6rem;
+        font-size: 0.8rem;
+        color: var(--gris);
+    }
+
+    .publication-meta .bi {
+        color: var(--color-parroquia);
+    }
+
+    .publication-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.15rem;
+        color: var(--roca);
+        margin-bottom: 0.5rem;
+    }
+
+    .publication-preview {
+        font-size: 0.88rem;
+        color: var(--gris);
+        line-height: 1.6;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .read-more {
+        font-size: 0.82rem;
+        color: var(--color-parroquia);
+        margin-top: 0.7rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 3rem;
+        color: var(--gris);
+    }
+
+    .empty-state .bi {
+        font-size: 3rem;
+        color: var(--color-parroquia);
+        opacity: 0.4;
+        display: block;
+        margin-bottom: 1rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+    <div class="publications-header">
+        <p class="parish-name"><i class="bi bi-bank me-1"></i>{{ parish.name }}</p>
+        <h1>Avisos</h1>
+    </div>
+
+    <section class="publications-section">
+        <div class="container">
+
+            <a href="/{{ parish.slug }}/" class="back-link">
+                <i class="bi bi-arrow-left"></i> Volver a la parroquia
+            </a>
+
+            {% if publications %}
+                {% for publication in publications %}
+                <a href="/{{ parish.slug }}/avisos/{{ publication.id }}/" class="publication-card">
+                    <div class="publication-meta">
+                        <span><i class="bi bi-calendar3"></i> {{ publication.date }}</span>
+                        {% if publication.author %}
+                            <span><i class="bi bi-person"></i> {{ publication.author }}</span>
+                        {% endif %}
+                    </div>
+                    <div class="publication-title">{{ publication.title }}</div>
+                    <div class="publication-preview">{{ publication.body|striptags }}</div>
+                    <span class="read-more">Leer más <i class="bi bi-arrow-right"></i></span>
+                </a>
+                {% endfor %}
+            {% else %}
+                <div class="empty-state">
+                    <i class="bi bi-megaphone"></i>
+                    <p>No hay avisos publicados aún.</p>
+                </div>
+            {% endif %}
+
+        </div>
+    </section>
+
+{% endblock %}
