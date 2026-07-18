@@ -9,6 +9,20 @@ class PublicationAdmin(admin.ModelAdmin):
         models.TextField: {"widget": TinyMCE()},
     }
 
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        if request.user.is_superuser:
+            return qs
+        return qs.filter(parish=request.user.parish)
 
-admin.site.register(Parish)
+
+class ParishAdmin(admin.ModelAdmin):
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        if request.user.is_superuser:
+            return qs
+        return qs.filter(id=request.user.parish.id)
+
+
+admin.site.register(Parish, ParishAdmin)
 admin.site.register(Publication, PublicationAdmin)
